@@ -24,7 +24,7 @@ def parse_command_text(text):
     try:
         caption = '\n'.join([s.strip() for s in caption.split('|')])
     except Exception, e:
-        caption = wrap_text(caption, 45)
+        caption = wrap_text(caption, 25)
 
     try:
         query = text[:text.index('"')].strip()
