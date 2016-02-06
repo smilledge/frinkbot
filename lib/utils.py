@@ -20,13 +20,11 @@ def parse_command_text(text):
         caption = re.findall(r'"([^"]*)"', text)[0]
     except Exception, e:
         caption = None
-    else:
-        try:
-            caption = '\n'.join(map(str.strip, caption.split('|')))
-        except Exception, e:
-            pass
-        else:
-            caption = wrap_text(caption, 45)
+
+    try:
+        caption = '\n'.join([s.strip() for s in caption.split('|')])
+    except Exception, e:
+        caption = wrap_text(caption, 45)
 
     try:
         query = text[:text.index('"')].strip()
