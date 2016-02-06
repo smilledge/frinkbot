@@ -1,0 +1,11 @@
+.env
+.DS_Store
+.idea
+.cache
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+*.log
