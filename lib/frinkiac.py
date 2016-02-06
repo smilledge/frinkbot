@@ -8,10 +8,10 @@ USER_AGENT = 'FRINKBOT 5000'
 
 
 def make_meme(query, caption):
-    frame = get_frame(query)
+    episode, timestamp = get_frame(query)
     if not caption:
-        caption = get_caption(*frame)
-    return get_meme_url(*frame + caption)
+        caption = get_caption(episode, timestamp)
+    return get_meme_url(episode, timestamp, caption)
 
 
 def get_frame(query):
@@ -24,12 +24,12 @@ def get_frame(query):
     print get_search_url(query)
     r = requests.get(get_search_url(query), headers={
         'User-Agent': USER_AGENT
-    }, verify=False)
+    })
     if not r.ok:
         raise ValueError('Invalid search query')
     results = r.json()
     frame = random.choice(results)
-    return (frame.Episode, frame.Timestamp)
+    return (frame['Episode'], frame['Timestamp'])
 
 
 def get_caption(episode, timestamp):
@@ -44,7 +44,7 @@ def get_caption(episode, timestamp):
     """
     r = requests.get(get_caption_url(episode, timestamp), headers={
         'User-Agent': USER_AGENT
-    }, verify=False)
+    })
     if not r.ok:
         return None
     try:
@@ -85,5 +85,8 @@ def get_meme_url(episode, timestamp, caption):
     :param caption:
     :return:
     """
-    url_caption = urllib.quote(caption)
-    return '%s/meme/%s/%s.jpg?lines=%s' % (FRINKIAC_URL, episode, timestamp, url_caption)
+    if caption:
+        caption = urllib.quote(caption)
+        return '%s/meme/%s/%s.jpg?lines=%s' % (FRINKIAC_URL, episode, timestamp, caption)
+    else:
+        return '%s/meme/%s/%s.jpg' % (FRINKIAC_URL, episode, timestamp)
