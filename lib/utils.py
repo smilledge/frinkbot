@@ -22,8 +22,12 @@ def parse_command_text(text):
         caption = None
 
     try:
-        caption = '\n'.join([s.strip() for s in caption.split('|')])
+        # Index will raise an exception in the string does not exist
+        if caption and caption.index('|'):
+            caption = '\n'.join([s.strip() for s in caption.split('|')])
     except Exception, e:
+        # If the user has not set the line breaks, make sure lines at 25 chars max
+        # Frinkiac seems to use two different text sizes. I don't know why?
         caption = wrap_text(caption, 25)
 
     try:
