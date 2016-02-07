@@ -1,6 +1,8 @@
 Frinkbot
 ========
 
+[![Build Status](https://travis-ci.org/smilledge/frinkbot.svg?branch=master)](https://travis-ci.org/smilledge/frinkbot)
+
 Frinkbot is a slash command that posts memes to your Slack channels from https://frinkiac.com/.
 
 ## Usage

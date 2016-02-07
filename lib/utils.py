@@ -16,6 +16,10 @@ def parse_command_text(text):
     :param text:
     :return:
     """
+    # Convert any curly quotes
+    text = text.replace( u'\u2018', u"'").replace( u'\u2019', u"'")
+    text = text.replace( u'\u201c', u'"').replace( u'\u201d', u'"')
+
     try:
         caption = re.findall(r'"([^"]*)"', text)[0]
     except Exception, e:
